@@ -1,0 +1,44 @@
+---
+title: "Data607 HW9 Web API"
+author: "Ritesh Lohiya"
+date: "March 30, 2018"
+output: html_document
+---
+ 
+Assignment - Web APIs
+
+The New York Times web site provides a rich set of APIs, as described here: http://developer.nytimes.com/docs
+You'll need to start by signing up for an API key.
+Your task is to choose one of the New York Times APIs, construct an interface in R to read in the JSON data, and transform it to an R dataframe.
+
+Load Libraries:
+
+#install.packages("rjson")
+
+```{r}
+library(httr)
+library(rjson)
+library(jsonlite)
+library(dplyr)
+```
+
+Load Books API:
+
+```{r}
+books <- GET("https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json", 
+                         query = list(api_key = "8a79e79ab80a4363b99376b942f5c0a7"))  
+names(books)
+books$status_code
+```
+
+Transform into Data Frame:
+
+```{r}
+booksdf <- fromJSON(books$url) %>% as.data.frame()
+booksdf
+```
+
+
+
+
+
